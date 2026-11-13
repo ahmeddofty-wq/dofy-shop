@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>لوحة التحكم | Dofy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F5F2;--sf:#fff;--ink:#1B1F3B;--mu:#6B6F80;--ln:#DDDDD6;--ac:#E0A526;--bt:#1B1F3B;--onbt:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#12142A;--sf:#1B1F3B;--ink:#F2F2EC;--mu:#A3A7BC;--ln:#2E3358;--bt:#E0A526;--onbt:#1B1F3B}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font-family:Cairo,Tahoma,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{border:1px solid var(--ln);background:var(--sf);border-radius:10px;padding:8px 12px;width:100%}
+button{cursor:pointer;border:1px solid var(--ln);background:var(--sf);border-radius:10px;padding:6px 14px}
+.pb{background:var(--bt);color:var(--onbt);border-color:var(--bt);font-weight:700;padding:10px 18px}
+.rd{color:#d33;border-color:#d33}
+.wrap{max-width:760px;margin:auto;padding:16px}
+#login{max-width:380px;margin:12vh auto;padding:20px;background:var(--sf);border:1px solid var(--ln);border-radius:14px;display:flex;flex-direction:column;gap:10px}
+h1,h2{margin:0}.mu{color:var(--mu)}.err{color:#d33;min-height:22px;font-size:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}.tabs button.on{background:var(--bt);color:var(--onbt)}
+.tabs b{background:var(--ac);color:#1B1F3B;border-radius:10px;padding:0 7px;margin-inline-start:6px;font-size:13px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:14px;margin-bottom:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fl{display:flex;flex-direction:column;gap:4px;font-size:14px;margin-bottom:8px}
+.col{display:grid;grid-template-columns:1fr 54px;gap:6px;margin-bottom:6px}.col input[type=color]{padding:2px;height:40px}
+.chk{display:flex;gap:16px;margin:8px 0}.chk label{display:flex;gap:6px;align-items:center}.chk input{width:auto}
+#pv{width:90px;height:90px;object-fit:cover;border-radius:8px;display:block;margin-top:6px}
+.it{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ln);flex-wrap:wrap}
+.th{width:52px;height:52px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden}.th img{width:100%;height:100%;object-fit:cover}
+.nf{flex:1;min-width:120px;display:flex;flex-direction:column}.nf small{color:var(--mu)}
+.oc{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.oh{display:flex;justify-content:space-between;gap:8px}.oh span{color:var(--mu);font-size:13px}
+.oc ul{margin:6px 0;padding-inline-start:20px}.ac2{display:flex;gap:8px;align-items:center;margin-top:8px}.ac2 select{width:auto}
+.ac2 a{background:#25a244;color:#fff;text-decoration:none;border-radius:10px;padding:6px 14px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;display:none;z-index:9}
+</style>
+</head>
+<body>
+<form id="login">
+  <h1>لوحة تحكم Dofy</h1><p class="mu" style="margin:0">سجّل الدخول بالإيميل والباسورد.</p>
+  <input id="em" type="email" placeholder="الإيميل" required autocomplete="username">
+  <input id="pw" type="password" placeholder="الباسورد" required autocomplete="current-password">
+  <div class="err" id="le"></div>
+  <button class="pb" type="submit">دخول</button>
+</form>
+
+<div class="wrap" id="app" hidden>
+  <div class="top"><h1>لوحة التحكم</h1><div><small class="mu" id="who"></small> <button data-a="out">خروج</button></div></div>
+  <div class="tabs"><button class="on" data-a="tab" data-v="p">المنتجات</button><button data-a="tab" data-v="o">الطلبات<b id="oc">0</b></button></div>
+
+  <div id="tp">
+    <form class="card" id="pf">
+      <h2 id="ft" style="font-size:18px;margin-bottom:10px">إضافة منتج</h2>
+      <label class="fl">اسم المنتج<input id="n" required></label>
+      <div class="g2">
+        <label class="fl">الفئة<input id="c" list="dl" required placeholder="مثلاً: تيشيرتات"></label>
+        <label class="fl">إيموجي بديل<input id="e" placeholder="👕"></label>
+        <label class="fl">السعر (ج.م)<input id="p" type="number" min="1" required></label>
+        <label class="fl">السعر قبل الخصم (اختياري)<input id="o" type="number" min="0"></label>
+      </div>
+      <datalist id="dl"></datalist>
+      <label class="fl">وصف قصير<textarea id="d" rows="2"></textarea></label>
+      <div class="fl">الألوان (اسم اللون واختيار اللون، لحد ٣)</div>
+      <div id="cols"></div>
+      <label class="fl">صورة المنتج<input id="im" type="file" accept="image/*"></label>
+      <img id="pv" alt="" hidden>
+      <div class="chk"><label><input type="checkbox" id="nw">شارة "جديد"</label><label><input type="checkbox" id="ac" checked>ظاهر في المتجر</label></div>
+      <button class="pb" type="submit">حفظ المنتج</button> <button type="button" data-a="rs">إلغاء</button>
+    </form>
+    <div class="card"><div class="top"><h2 style="font-size:18px">منتجاتك</h2><button data-a="seed">منتجات تجريبية</button></div><div id="pl"></div></div>
+  </div>
+  <div id="to" hidden><div id="ol"></div></div>
+</div>
+<div id="toast"></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,collection,getDocs,addDoc,updateDoc,deleteDoc,doc,query,orderBy} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyDt09uPxATOT9ziQ7fEsstwPlmH88l5d6c",authDomain:"dofy-e65f7.firebaseapp.com",projectId:"dofy-e65f7",storageBucket:"dofy-e65f7.firebasestorage.app",messagingSenderId:"278077920585",appId:"1:278077920585:web:873e7097952a3d04def698"});
+const auth=getAuth(app),db=getFirestore(app);
+const $=i=>document.getElementById(i);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ST={new:"جديد",confirmed:"مؤكد",shipped:"اتشحن",delivered:"اتسلّم",cancelled:"ملغي"};
+let prods=[],orders=[],editId=null,img="";
+function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",2200)}
+const DC=["#2B2E3A","#E9E9E4","#6F8FB8"];
+$("cols").innerHTML=[0,1,2].map(i=>`<div class="col"><input id="cn${i}" placeholder="اسم اللون ${i+1}"><input id="cc${i}" type="color" value="${DC[i]}"></div>`).join("");
+
+$("login").onsubmit=async e=>{e.preventDefault();$("le").textContent="";
+ try{await signInWithEmailAndPassword(auth,$("em").value.trim(),$("pw").value)}
+ catch(x){$("le").textContent="تعذّر الدخول: "+x.code}};
+onAuthStateChanged(auth,u=>{$("login").hidden=!!u;$("app").hidden=!u;if(u){$("who").textContent=u.email;loadP();loadO()}});
+
+async function loadP(){
+ try{const s=await getDocs(collection(db,"products"));prods=[];s.forEach(d=>prods.push({id:d.id,...d.data()}));
+ prods.sort((a,b)=>(b.ord||0)-(a.ord||0));
+ $("pl").innerHTML=prods.length?prods.map(p=>`<div class="it"><div class="th">${p.img?`<img src="${p.img}" alt="">`:esc(p.e||"👕")}</div><div class="nf"><b>${esc(p.n)}</b><small>${esc(p.c)} · ${esc(p.p)} ج.م${p.active===false?" · مخفي":""}</small></div><button data-a="ed" data-v="${p.id}">تعديل</button><button data-a="tg" data-v="${p.id}">${p.active===false?"إظهار":"إخفاء"}</button><button class="rd" data-a="dp" data-v="${p.id}">حذف</button></div>`).join(""):'<p class="mu">مفيش منتجات. ضيف أول منتج أو دوس "منتجات تجريبية".</p>';
+ $("dl").innerHTML=[...new Set(prods.map(p=>p.c))].map(c=>`<option value="${esc(c)}">`).join("")}
+ catch(x){toast("تعذّر تحميل المنتجات: "+x.code)}}
+async function loadO(){
+ try{const s=await getDocs(query(collection(db,"orders"),orderBy("createdAt","desc")));orders=[];s.forEach(d=>orders.push({id:d.id,...d.data()}));
+ $("ol").innerHTML=orders.length?orders.map(o=>{const t=o.createdAt&&o.createdAt.toDate?o.createdAt.toDate().toLocaleString("ar-EG"):"";const ph=String(o.phone||"").replace(/\D/g,"").replace(/^0/,"20");
+ return `<div class="oc"><div class="oh"><b>${esc(o.name)}</b><span>${t}</span></div><div>${esc(o.phone)} · ${esc(o.gov)}</div><div class="mu">${esc(o.address)}</div><ul>${(o.items||[]).map(i=>`<li>${esc(i.n)} (${esc(i.cn)}، مقاس ${esc(i.s)}) × ${esc(i.q)}</li>`).join("")}</ul><div><b>الإجمالي: ${esc(o.total)} ج.م</b> <small class="mu">(شحن ${esc(o.shipping)}${o.coupon?"، كود "+esc(o.coupon):""})</small></div><div class="ac2"><select data-oid="${o.id}">${Object.keys(ST).map(k=>`<option value="${k}" ${o.status==k?"selected":""}>${ST[k]}</option>`).join("")}</select><a href="https://wa.me/${ph}" target="_blank" rel="noopener">واتساب</a><button class="rd" data-a="od" data-v="${o.id}">حذف</button></div></div>`}).join(""):'<p class="mu">مفيش طلبات لسه.</p>';
+ $("oc").textContent=orders.filter(o=>o.status=="new").length}
+ catch(x){toast("تعذّر تحميل الطلبات: "+x.code)}}
+
+function reset(){editId=null;img="";$("pf").reset();$("ft").textContent="إضافة منتج";$("pv").hidden=true;[0,1,2].forEach(i=>$("cc"+i).value=DC[i]);$("ac").checked=true}
+$("im").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
+ r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,700/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);img=c.toDataURL("image/jpeg",.78);$("pv").src=img;$("pv").hidden=false};i.src=r.result};r.readAsDataURL(f)};
+$("pf").onsubmit=async e=>{e.preventDefault();
+ const colors=[0,1,2].map(i=>({n:$("cn"+i).value.trim(),h:$("cc"+i).value})).filter(c=>c.n);
+ const d={n:$("n").value.trim(),c:$("c").value.trim(),p:+$("p").value,o:+$("o").value||0,e:$("e").value.trim()||"👕",d:$("d").value.trim(),colors,img,nw:$("nw").checked,active:$("ac").checked};
+ try{if(editId)await updateDoc(doc(db,"products",editId),d);else await addDoc(collection(db,"products"),{...d,ord:Date.now()});
+ reset();await loadP();toast("اتحفظ ✓")}catch(x){toast("حصل خطأ: "+x.code)}};
+
+const SEED=[["تيشيرت قطن أساسي","تيشيرتات",250,320,"👕",0,"قطن ١٠٠٪ بوزن ١٨٠ جم، قصّة مريحة.",[["أسود","#2B2E3A"],["أبيض","#E9E9E4"],["أزرق","#6F8FB8"]]],
+["تيشيرت أوفر سايز","تيشيرتات",290,0,"👕",1,"قصّة واسعة وخامة تقيلة.",[["بيج","#CDBBA0"],["زيتي","#7C8560"],["رمادي","#8E9099"]]],
+["قميص كتان","قمصان",450,550,"👔",0,"كتان خفيف للصيف.",[["أبيض","#E9E9E4"],["سماوي","#A9C3DD"],["زيتي","#7C8560"]]],
+["قميص كاجوال مخطط","قمصان",420,0,"👔",1,"قماش بوبلين ناعم.",[["أزرق","#6F8FB8"],["رمادي","#8E9099"]]],
+["بنطلون جينز","بناطيل",650,790,"👖",0,"جينز استريتش بقصّة مستقيمة.",[["أزرق غامق","#3E5C8A"],["أسود","#2B2E3A"]]],
+["بنطلون تشينو","بناطيل",580,0,"👖",0,"جبردين قطن بقصّة ضيّقة شوية.",[["بيج","#CDBBA0"],["زيتي","#7C8560"],["أسود","#2B2E3A"]]],
+["جاكيت خفيف","جاكيتات",900,1100,"🧥",1,"جاكيت مقاوم للرياح بجيوب بسوستة.",[["أسود","#2B2E3A"],["كحلي","#26325A"]]],
+["هودي فليس","جاكيتات",720,0,"🧥",0,"فليس داخلي دافي وكابوشون.",[["رمادي","#8E9099"],["بيج","#CDBBA0"],["أسود","#2B2E3A"]]]];
+
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-a]");if(!t)return;const a=t.dataset.a,v=t.dataset.v;
+ try{
+ if(a=="out")signOut(auth);
+ else if(a=="tab"){$("tp").hidden=v!="p";$("to").hidden=v!="o";document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v==v));if(v=="o")loadO()}
+ else if(a=="rs")reset();
+ else if(a=="ed"){const p=prods.find(x=>x.id==v);editId=v;img=p.img||"";$("ft").textContent="تعديل: "+p.n;
+  $("n").value=p.n;$("c").value=p.c;$("p").value=p.p;$("o").value=p.o||"";$("e").value=p.e||"";$("d").value=p.d||"";$("nw").checked=!!p.nw;$("ac").checked=p.active!==false;
+  [0,1,2].forEach(i=>{const c=(p.colors||[])[i];$("cn"+i).value=c?c.n:"";$("cc"+i).value=c?c.h:DC[i]});
+  $("pv").src=img;$("pv").hidden=!img;window.scrollTo({top:0,behavior:"smooth"})}
+ else if(a=="tg"){const p=prods.find(x=>x.id==v);await updateDoc(doc(db,"products",v),{active:p.active===false});loadP()}
+ else if(a=="dp"){if(confirm("تمسح المنتج ده نهائياً؟")){await deleteDoc(doc(db,"products",v));loadP()}}
+ else if(a=="od"){if(confirm("تمسح الطلب ده نهائياً؟")){await deleteDoc(doc(db,"orders",v));loadO()}}
+ else if(a=="seed"){if(!confirm("تضيف ٨ منتجات تجريبية؟"))return;let k=Date.now();
+  for(const s of SEED)await addDoc(collection(db,"products"),{n:s[0],c:s[1],p:s[2],o:s[3],e:s[4],nw:!!s[5],d:s[6],colors:s[7].map(c=>({n:c[0],h:c[1]})),img:"",active:true,ord:k--});
+  loadP();toast("اتضافت ✓")}
+ }catch(x){toast("حصل خطأ: "+(x.code||x.message))}});
+document.addEventListener("change",async e=>{const id=e.target.dataset.oid;if(!id)return;
+ try{await updateDoc(doc(db,"orders",id),{status:e.target.value});loadO();toast("اتحدّثت الحالة ✓")}catch(x){toast("حصل خطأ: "+x.code)}});
+</script>
+</body>
+</html>
