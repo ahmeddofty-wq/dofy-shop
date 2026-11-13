@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>لوحة التحكم | Dofy</title>
+<title>لوحة التحكم الشاملة | Dofy</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F5F5F2;--sf:#fff;--ink:#1B1F3B;--mu:#6B6F80;--ln:#DDDDD6;--ac:#E0A526;--bt:#1B1F3B;--onbt:#fff}
@@ -16,11 +16,11 @@ input,select,textarea{border:1px solid var(--ln);background:var(--sf);border-rad
 button{cursor:pointer;border:1px solid var(--ln);background:var(--sf);border-radius:10px;padding:6px 14px}
 .pb{background:var(--bt);color:var(--onbt);border-color:var(--bt);font-weight:700;padding:10px 18px}
 .rd{color:#d33;border-color:#d33}
-.wrap{max-width:760px;margin:auto;padding:16px}
+.wrap{max-width:800px;margin:auto;padding:16px}
 #login{max-width:380px;margin:12vh auto;padding:20px;background:var(--sf);border:1px solid var(--ln);border-radius:14px;display:flex;flex-direction:column;gap:10px}
 h1,h2{margin:0}.mu{color:var(--mu)}.err{color:#d33;min-height:22px;font-size:14px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
-.tabs{display:flex;gap:8px;margin-bottom:14px}.tabs button.on{background:var(--bt);color:var(--onbt)}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}.tabs button.on{background:var(--bt);color:var(--onbt)}
 .tabs b{background:var(--ac);color:#1B1F3B;border-radius:10px;padding:0 7px;margin-inline-start:6px;font-size:13px}
 .card{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:14px;margin-bottom:14px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fl{display:flex;flex-direction:column;gap:4px;font-size:14px;margin-bottom:8px}
@@ -39,7 +39,7 @@ h1,h2{margin:0}.mu{color:var(--mu)}.err{color:#d33;min-height:22px;font-size:14p
 </head>
 <body>
 <form id="login">
-  <h1>لوحة تحكم Dofy</h1><p class="mu" style="margin:0">سجّل الدخول بالإيميل والباسورد.</p>
+  <h1>لوحة التحكم</h1><p class="mu" style="margin:0">سجّل الدخول بالإيميل والباسورد.</p>
   <input id="em" type="email" placeholder="الإيميل" required autocomplete="username">
   <input id="pw" type="password" placeholder="الباسورد" required autocomplete="current-password">
   <div class="err" id="le"></div>
@@ -47,12 +47,17 @@ h1,h2{margin:0}.mu{color:var(--mu)}.err{color:#d33;min-height:22px;font-size:14p
 </form>
 
 <div class="wrap" id="app" hidden>
-  <div class="top"><h1>لوحة التحكم</h1><div><small class="mu" id="who"></small> <button data-a="out">خروج</button></div></div>
-  <div class="tabs"><button class="on" data-a="tab" data-v="p">المنتجات</button><button data-a="tab" data-v="o">الطلبات<b id="oc">0</b></button></div>
+  <div class="top"><h1>لوحة التحكم الشاملة</h1><div><small class="mu" id="who"></small> <button data-a="out">خروج</button></div></div>
+  <div class="tabs">
+    <button class="on" data-a="tab" data-v="p">المنتجات</button>
+    <button data-a="tab" data-v="o">الطلبات<b id="oc">0</b></button>
+    <button data-a="tab" data-v="s">إعدادات الموقع والنصوص</button>
+  </div>
 
+  <!-- قسم المنتجات -->
   <div id="tp">
     <form class="card" id="pf">
-      <h2 id="ft" style="font-size:18px;margin-bottom:10px">إضافة منتج</h2>
+      <h2 id="ft" style="font-size:18px;margin-bottom:10px">إضافة منتج جديد</h2>
       <label class="fl">اسم المنتج<input id="n" required></label>
       <div class="g2">
         <label class="fl">الفئة<input id="c" list="dl" required placeholder="مثلاً: تيشيرتات"></label>
@@ -69,16 +74,36 @@ h1,h2{margin:0}.mu{color:var(--mu)}.err{color:#d33;min-height:22px;font-size:14p
       <div class="chk"><label><input type="checkbox" id="nw">شارة "جديد"</label><label><input type="checkbox" id="ac" checked>ظاهر في المتجر</label></div>
       <button class="pb" type="submit">حفظ المنتج</button> <button type="button" data-a="rs">إلغاء</button>
     </form>
-    <div class="card"><div class="top"><h2 style="font-size:18px">منتجاتك</h2><button data-a="seed">منتجات تجريبية</button></div><div id="pl"></div></div>
+    <div class="card"><div class="top"><h2 style="font-size:18px">منتجاتك الحالية</h2><button data-a="seed">منتجات تجريبية</button></div><div id="pl"></div></div>
   </div>
+
+  <!-- قسم الطلبات -->
   <div id="to" hidden><div id="ol"></div></div>
+
+  <!-- قسم إعدادات النصوص والأسعار العامة -->
+  <div id="ts" hidden>
+    <form class="card" id="sf">
+      <h2 style="font-size:18px;margin-bottom:10px">إعدادات النصوص وأرقام المتجر</h2>
+      <label class="fl">اسم المتجر<input id="st_name" required></label>
+      <label class="fl">رقم الواتساب (بدون علامة +، مثلاً 2010xxxxxxxx)<input id="st_wa" required></label>
+      <div class="g2">
+        <label class="fl">حد الشحن المجاني (ج.م)<input id="st_free" type="number" required></label>
+        <label class="fl">كود الخصم<input id="st_code" required></label>
+        <label class="fl">نسبة الخصم (٪)<input id="st_pct" type="number" required></label>
+      </div>
+      <label class="fl">شريط الإعلانات المتحرك أعلى الموقع<input id="st_bar" required></label>
+      <label class="fl">عنوان الهيرو الرئيسي (الواجهة)<input id="st_htitle" required></label>
+      <label class="fl">وصف الهيرو تحت العنوان<textarea id="st_hdesc" rows="2" required></textarea></label>
+      <button class="pb" type="submit">حفظ الإعدادات بالكامل</button>
+    </form>
+  </div>
 </div>
 <div id="toast"></div>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,collection,getDocs,addDoc,updateDoc,deleteDoc,doc,query,orderBy} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,collection,getDocs,getDoc,setDoc,addDoc,updateDoc,deleteDoc,doc,query,orderBy} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const app=initializeApp({apiKey:"AIzaSyDt09uPxATOT9ziQ7fEsstwPlmH88l5d6c",authDomain:"dofy-e65f7.firebaseapp.com",projectId:"dofy-e65f7",storageBucket:"dofy-e65f7.firebasestorage.app",messagingSenderId:"278077920585",appId:"1:278077920585:web:873e7097952a3d04def698"});
 const auth=getAuth(app),db=getFirestore(app);
 const $=i=>document.getElementById(i);
@@ -92,7 +117,7 @@ $("cols").innerHTML=[0,1,2].map(i=>`<div class="col"><input id="cn${i}" placehol
 $("login").onsubmit=async e=>{e.preventDefault();$("le").textContent="";
  try{await signInWithEmailAndPassword(auth,$("em").value.trim(),$("pw").value)}
  catch(x){$("le").textContent="تعذّر الدخول: "+x.code}};
-onAuthStateChanged(auth,u=>{$("login").hidden=!!u;$("app").hidden=!u;if(u){$("who").textContent=u.email;loadP();loadO()}});
+onAuthStateChanged(auth,u=>{$("login").hidden=!!u;$("app").hidden=!u;if(u){$("who").textContent=u.email;loadP();loadO();loadSettings()}});
 
 async function loadP(){
  try{const s=await getDocs(collection(db,"products"));prods=[];s.forEach(d=>prods.push({id:d.id,...d.data()}));
@@ -100,6 +125,7 @@ async function loadP(){
  $("pl").innerHTML=prods.length?prods.map(p=>`<div class="it"><div class="th">${p.img?`<img src="${p.img}" alt="">`:esc(p.e||"👕")}</div><div class="nf"><b>${esc(p.n)}</b><small>${esc(p.c)} · ${esc(p.p)} ج.م${p.active===false?" · مخفي":""}</small></div><button data-a="ed" data-v="${p.id}">تعديل</button><button data-a="tg" data-v="${p.id}">${p.active===false?"إظهار":"إخفاء"}</button><button class="rd" data-a="dp" data-v="${p.id}">حذف</button></div>`).join(""):'<p class="mu">مفيش منتجات. ضيف أول منتج أو دوس "منتجات تجريبية".</p>';
  $("dl").innerHTML=[...new Set(prods.map(p=>p.c))].map(c=>`<option value="${esc(c)}">`).join("")}
  catch(x){toast("تعذّر تحميل المنتجات: "+x.code)}}
+
 async function loadO(){
  try{const s=await getDocs(query(collection(db,"orders"),orderBy("createdAt","desc")));orders=[];s.forEach(d=>orders.push({id:d.id,...d.data()}));
  $("ol").innerHTML=orders.length?orders.map(o=>{const t=o.createdAt&&o.createdAt.toDate?o.createdAt.toDate().toLocaleString("ar-EG"):"";const ph=String(o.phone||"").replace(/\D/g,"").replace(/^0/,"20");
@@ -107,7 +133,18 @@ async function loadO(){
  $("oc").textContent=orders.filter(o=>o.status=="new").length}
  catch(x){toast("تعذّر تحميل الطلبات: "+x.code)}}
 
-function reset(){editId=null;img="";$("pf").reset();$("ft").textContent="إضافة منتج";$("pv").hidden=true;[0,1,2].forEach(i=>$("cc"+i).value=DC[i]);$("ac").checked=true}
+async function loadSettings(){
+ try{const d=await getDoc(doc(db,"settings","main"));if(d.exists()){const s=d.data();
+  $("st_name").value=s.name||"Dofy";$("st_wa").value=s.wa||"201013291515";$("st_free").value=s.free||1000;
+  $("st_code").value=s.code||"DOFY10";$("st_pct").value=s.pct||10;$("st_bar").value=s.bar||"شحن مجاني على الطلبات فوق ١٠٠٠ ج.م · كود الخصم DOFY10";
+  $("st_htitle").value=s.htitle||"ملابس يومية بخامات تستحمل";$("st_hdesc").value=s.hdesc||"قصّات مريحة وأسعار واضحة، والدفع عند الاستلام. اختار لونك ومقاسك واطلب في دقيقة."}}
+ catch(e){console.error(e)}}
+
+$("sf").onsubmit=async e=>{e.preventDefault();
+ const obj={name:$("st_name").value,wa:$("st_wa").value,free:+$("st_free").value,code:$("st_code").value.trim().toUpperCase(),pct:+$("st_pct").value,bar:$("st_bar").value,htitle:$("st_htitle").value,hdesc:$("st_hdesc").value};
+ try{await setDoc(doc(db,"settings","main"),obj);toast("اتحفظت الإعدادات بنجاح ✓")}catch(x){toast("خطأ: "+x.code)}};
+
+function reset(){editId=null;img="";$("pf").reset();$("ft").textContent="إضافة منتج جديد";$("pv").hidden=true;[0,1,2].forEach(i=>$("cc"+i).value=DC[i]);$("ac").checked=true}
 $("im").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
  r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,700/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);img=c.toDataURL("image/jpeg",.78);$("pv").src=img;$("pv").hidden=false};i.src=r.result};r.readAsDataURL(f)};
 $("pf").onsubmit=async e=>{e.preventDefault();
@@ -128,7 +165,7 @@ const SEED=[["تيشيرت قطن أساسي","تيشيرتات",250,320,"👕",
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-a]");if(!t)return;const a=t.dataset.a,v=t.dataset.v;
  try{
  if(a=="out")signOut(auth);
- else if(a=="tab"){$("tp").hidden=v!="p";$("to").hidden=v!="o";document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v==v));if(v=="o")loadO()}
+ else if(a=="tab"){$("tp").hidden=v!="p";$("to").hidden=v!="o";$("ts").hidden=v!="s";document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v==v));if(v=="o")loadO();if(v=="s")loadSettings()}
  else if(a=="rs")reset();
  else if(a=="ed"){const p=prods.find(x=>x.id==v);editId=v;img=p.img||"";$("ft").textContent="تعديل: "+p.n;
   $("n").value=p.n;$("c").value=p.c;$("p").value=p.p;$("o").value=p.o||"";$("e").value=p.e||"";$("d").value=p.d||"";$("nw").checked=!!p.nw;$("ac").checked=p.active!==false;
@@ -142,7 +179,7 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-a]")
   loadP();toast("اتضافت ✓")}
  }catch(x){toast("حصل خطأ: "+(x.code||x.message))}});
 document.addEventListener("change",async e=>{const id=e.target.dataset.oid;if(!id)return;
- try{await updateDoc(doc(db,"orders",id),{status:e.target.value});loadO();toast("اتحدّثت الحالة ✓")}catch(x){toast("حصل خطأ: "+x.code)}});
+ try{await updateDoc(doc(db,"orders",id),{status:e.target.value});loadO();toast("اتحّثت الحالة ✓")}catch(x){toast("حصل خطأ: "+x.code)}});
 </script>
 </body>
 </html>
