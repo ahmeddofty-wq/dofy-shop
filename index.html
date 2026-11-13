@@ -3,21 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dofy | متجر ملابس</title>
-<meta name="description" content="Dofy: تيشيرتات وقمصان وبناطيل وجاكيتات بخامات تستحمل. الدفع عند الاستلام، شحن لكل محافظات مصر، واستبدال خلال ١٤ يوم.">
+<title id="m_title">Dofy | متجر ملابس</title>
+<meta name="description" content="متجر ملابس أونلاين في مصر">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#1B1F3B">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="ar_EG">
-<meta property="og:title" content="Dofy | متجر ملابس">
-<meta property="og:description" content="ملابس يومية بخامات تستحمل. الدفع عند الاستلام وشحن لكل المحافظات.">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ClothingStore","name":"Dofy","description":"متجر ملابس أونلاين في مصر","areaServed":"EG","currenciesAccepted":"EGP","paymentAccepted":"Cash on delivery","openingHours":"Mo-Su 10:00-22:00"}</script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Reem+Kufi:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F5F5F2;--sf:#fff;--ink:#1B1F3B;--mu:#6B6F80;--ln:#DDDDD6;--ac:#E0A526;--onac:#1B1F3B;--bt:#1B1F3B;--onbt:#fff;--hero:#1B1F3B;--herot:#F5F5F2;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12142A;--sf:#1B1F3B;--ink:#F2F2EC;--mu:#A3A7BC;--ln:#2E3358;--bt:#E0A526;--onbt:#1B1F3B;--hero:#0C0E20}}
-:root[data-theme="dark"]{--bg:#12142A;--sf:#1B1F3B;--ink:#F2F2EC;--mu:#A3A7BC;--ln:#2E3358;--bt:#E0A526;--onbt:#1B1F3B;--hero:#0C0E20}
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,sans-serif;line-height:1.6}
@@ -69,7 +63,6 @@ main{max-width:1000px;margin:auto;padding:20px 16px 60px}
 .q button{width:28px;height:28px;border-radius:8px;border:1px solid var(--ln);background:none}
 .empty{color:var(--mu);text-align:center;padding:40px 0}
 .foot{padding:12px 16px;border-top:1px solid var(--ln);display:flex;flex-direction:column;gap:8px}
-.foot .fld{width:100%}
 .prog{height:8px;background:var(--ln);border-radius:8px;overflow:hidden}.prog i{display:block;height:100%;background:var(--ac);transition:width .3s}
 .ln{display:flex;justify-content:space-between;font-size:15px}
 .tot{font-weight:700;font-size:19px}
@@ -100,15 +93,15 @@ details{border:1px solid var(--ln);border-radius:10px;margin-bottom:8px;backgrou
 </style>
 </head>
 <body>
-<div class="bar">شحن مجاني على الطلبات فوق ١٠٠٠ ج.م · كود الخصم DOFY10</div>
+<div class="bar" id="ui_bar">جاري التحميل...</div>
 <header>
-  <div class="logo">Dofy</div>
+  <div class="logo" id="ui_logo">Dofy</div>
   <button class="ib" data-a="fl" id="flb">♥<b id="fc">0</b></button>
   <button class="ib" data-a="cart">السلة<b id="cnt">0</b></button>
 </header>
 <section class="hero"><div class="hi">
-  <h1>ملابس يومية بخامات تستحمل</h1>
-  <p>قصّات مريحة وأسعار واضحة، والدفع عند الاستلام. اختار لونك ومقاسك واطلب في دقيقة.</p>
+  <h1 id="ui_htitle">جاري التحميل...</h1>
+  <p id="ui_hdesc">برجاء الانتظار...</p>
   <button class="cta" data-a="go">تسوّق دلوقتي</button>
 </div></section>
 <main id="shop">
@@ -132,7 +125,7 @@ details{border:1px solid var(--ln);border-radius:10px;margin-bottom:8px;backgrou
 <div class="tw"><table><tr><th>المقاس</th><th>الصدر</th><th>الطول</th></tr><tr><td>S</td><td>٩٦</td><td>٦٨</td></tr><tr><td>M</td><td>١٠٢</td><td>٧٠</td></tr><tr><td>L</td><td>١٠٨</td><td>٧٢</td></tr><tr><td>XL</td><td>١١٤</td><td>٧٤</td></tr></table></div>
 <div class="cbtns"><button class="go" data-a="wa" data-v="أهلاً، عندي استفسار بخصوص طلب">كلمنا على واتساب</button><button class="cb" data-a="call">اتصل بينا</button></div>
 </div></section>
-<footer>© Dofy — جميع الحقوق محفوظة · الاستبدال والاسترجاع خلال ١٤ يوم</footer>
+<footer id="ui_footer">© Dofy — جميع الحقوق محفوظة</footer>
 <button class="fab" data-a="hp" aria-label="مساعدة">💬 محتاج مساعدة؟</button>
 <div id="help"><div class="hd">أهلاً بيك 👋 تحب نساعدك في إيه؟</div><div class="bd"><button data-a="wa" data-v="عايز أسأل عن مقاس مناسب">أسأل عن المقاس</button><button data-a="wa" data-v="عايز أتابع حالة طلبي">متابعة طلبي</button><button data-a="wa" data-v="عايز أستبدل أو أرجّع منتج">استبدال أو استرجاع</button><button data-a="wa" data-v="عندي استفسار تاني">استفسار تاني</button><button data-a="call">📞 اتصل بينا</button></div></div>
 
@@ -159,9 +152,7 @@ details{border:1px solid var(--ln);border-radius:10px;margin-bottom:8px;backgrou
 <div id="toast"></div>
 
 <script>
-/* ===== إعدادات المتجر: غيّر القيم دي بس ===== */
-var CONFIG={name:"Dofy",wa:"201013291515",free:1000,code:"DOFY10",pct:10};
-/* wa = رقم واتساب بصيغة دولية بدون + ، free = حد الشحن المجاني ، pct = نسبة الخصم */
+var CONFIG={name:"Dofy",wa:"201013291515",free:1000,code:"DOFY10",pct:10,bar:"شحن مجاني على الطلبات فوق ١٠٠٠ ج.م · كود الخصم DOFY10",htitle:"ملابس يومية بخامات تستحمل",hdesc:"قصّات مريحة وأسعار واضحة، والدفع عند الاستلام. اختار لونك ومقاسك واطلب في دقيقة."};
 var WA=CONFIG.wa;
 var K={bk:["أسود","#2B2E3A"],wh:["أبيض","#E9E9E4"],bl:["أزرق","#6F8FB8"],be:["بيج","#CDBBA0"],ol:["زيتي","#7C8560"],gr:["رمادي","#8E9099"],lb:["سماوي","#A9C3DD"],dn:["أزرق غامق","#3E5C8A"],nv:["كحلي","#26325A"]};
 var P=[],loaded=false;
@@ -207,7 +198,7 @@ document.addEventListener("click",function(e){var t=e.target.closest("[data-a]")
  else if(a=="cart"){rc();panel(true)}
  else if(a=="close")closeAll();
  else if(a=="go")$("shop").scrollIntoView();
- else if(a=="wa"){window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(v),"_blank");$("help").classList.remove("on")}
+ else if(a=="wa"){window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(m),"_blank");$("help").classList.remove("on")}
  else if(a=="hp")$("help").classList.toggle("on");
  else if(a=="call")window.location.href="tel:+"+WA;
  else if(a=="qty"){cart[+p[0]].q+=+p[1];if(cart[+p[0]].q<1)cart.splice(+p[0],1);rc()}
@@ -215,21 +206,49 @@ document.addEventListener("click",function(e){var t=e.target.closest("[data-a]")
  else if(a=="send"){var nm=$("nm").value.trim(),ph=$("ph").value.trim(),ad=$("ad").value.trim();
   if(!nm||!ph||!ad){$("msg").className="msg";$("msg").textContent="اكتب الاسم ورقم الموبايل والعنوان عشان نكمل الطلب.";return}
   var T=tot(),g=$("gv").options[$("gv").selectedIndex].text;
-  var m="طلب جديد من Dofy\n\n"+cart.map(function(i){return "• "+i.n+" ("+i.cn+"، مقاس "+i.s+") × "+i.q+" = "+i.q*i.p+" ج.م"}).join("\n")+"\n\nالمنتجات: "+T.s+" ج.م"+(T.d?"\nالخصم: "+T.d+" ج.م":"")+"\nالشحن ("+g+"): "+(T.sh?T.sh+" ج.م":"مجاني")+"\nالإجمالي: "+T.t+" ج.م\nالدفع: عند الاستلام\n\nالاسم: "+nm+"\nالموبايل: "+ph+"\nالعنوان: "+ad;
+  var m="طلب جديد من "+CONFIG.name+"\n\n"+cart.map(function(i){return "• "+i.n+" ("+i.cn+"، مقاس "+i.s+") × "+i.q+" = "+i.q*i.p+" ج.م"}).join("\n")+"\n\nالمنتجات: "+T.s+" ج.م"+(T.d?"\nالخصم: "+T.d+" ج.م":"")+"\nالشحن ("+g+"): "+(T.sh?T.sh+" ج.م":"مجاني")+"\nالإجمالي: "+T.t+" ج.م\nالدفع: عند الاستلام\n\nالاسم: "+nm+"\nالموبايل: "+ph+"\nالعنوان: "+ad;
   try{window.saveOrder&&window.saveOrder({name:nm,phone:ph,address:ad,gov:g,items:cart.map(function(i){return{n:i.n,cn:i.cn,s:i.s,q:i.q,p:i.p}}),subtotal:T.s,discount:T.d,shipping:T.sh,total:T.t,coupon:cpn?CONFIG.code:""})}catch(e){}
   window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(m),"_blank");cart=[];rc();closeAll();toast("تم تجهيز طلبك ✓")}
 });
 $("q").oninput=grid;$("so").onchange=grid;$("gv").onchange=rc;
-document.querySelector(".bar").textContent="شحن مجاني على الطلبات فوق "+CONFIG.free.toLocaleString("ar-EG")+" ج.م · كود الخصم "+CONFIG.code;
+
+window.applySettings=function(s){
+ CONFIG.name=s.name||"Dofy";
+ CONFIG.wa=s.wa||"201013291515";
+ WA=CONFIG.wa;
+ CONFIG.free=Number(s.free)||1000;
+ CONFIG.code=s.code||"DOFY10";
+ CONFIG.pct=Number(s.pct)||10;
+ CONFIG.bar=s.bar||"";
+ CONFIG.htitle=s.htitle||"";
+ CONFIG.hdesc=s.hdesc||"";
+ 
+ document.title=CONFIG.name+" | متجر ملابس";
+ $("m_title").textContent=CONFIG.name+" | متجر ملابس";
+ $("ui_bar").textContent=CONFIG.bar+" · كود الخصم "+CONFIG.code;
+ $("ui_logo").textContent=CONFIG.name;
+ $("ui_htitle").textContent=CONFIG.htitle;
+ $("ui_hdesc").textContent=CONFIG.hdesc;
+ $("ui_footer").textContent="© "+CONFIG.name+" — جميع الحقوق محفوظة · الاستبدال والاسترجاع خلال ١٤ يوم";
+ rc();
+};
+
 window.setProducts=function(L){P=L.map(function(x,i){var ks=(x.colors&&x.colors.length?x.colors:[{n:"افتراضي",h:"#DCE6F2"}]).map(function(c){K[c.h]=[c.n,c.h];return c.h});return{id:i+1,n:x.n,c:x.c,p:+x.p,o:+x.o||0,e:x.e||"👕",img:x.img||"",nw:x.nw?1:0,k:ks,d:x.d||""}});
  cats=["الكل"];var sn={};P.forEach(function(x){if(!sn[x.c]){sn[x.c]=1;cats.push(x.c)}});loaded=true;chips();grid()};
 chips();grid();rc();
 </script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getFirestore,collection,getDocs,addDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,collection,getDocs,getDoc,addDoc,doc,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const db=getFirestore(initializeApp({apiKey:"AIzaSyDt09uPxATOT9ziQ7fEsstwPlmH88l5d6c",authDomain:"dofy-e65f7.firebaseapp.com",projectId:"dofy-e65f7",storageBucket:"dofy-e65f7.firebasestorage.app",messagingSenderId:"278077920585",appId:"1:278077920585:web:873e7097952a3d04def698"}));
 window.saveOrder=o=>addDoc(collection(db,"orders"),{...o,status:"new",createdAt:serverTimestamp()}).catch(e=>console.error("order",e));
+
+// تحميل الإعدادات من فايربيز وتطبيقها لحظياً
+try{
+  const stDoc=await getDoc(doc(db,"settings","main"));
+  if(stDoc.exists()){window.applySettings(stDoc.data());}
+}catch(e){console.error("settings",e);}
+
 try{const s=await getDocs(collection(db,"products"));const L=[];s.forEach(d=>{const x=d.data();if(x.active!==false)L.push(x)});
 L.sort((a,b)=>(b.ord||0)-(a.ord||0));window.setProducts(L)}
 catch(e){console.error("products",e);window.setProducts([])}
